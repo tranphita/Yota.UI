@@ -1,0 +1,597 @@
+/* Variables */
+:root {
+    --yota-vertical-navigation-width: 280px;
+}
+
+yota-vertical-navigation {
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    top: 0;
+    width: var(--yota-vertical-navigation-width);
+    min-width: var(--yota-vertical-navigation-width);
+    max-width: var(--yota-vertical-navigation-width);
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+    z-index: 200;
+
+    /* ----------------------------------------------------------------------------------------------------- */
+    /* @ Navigation Drawer
+    /* ----------------------------------------------------------------------------------------------------- */
+
+    /* Animations */
+    &.yota-vertical-navigation-animations-enabled {
+        transition-duration: 400ms;
+        transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition-property: visibility, margin-left, margin-right, transform, width, max-width, min-width;
+
+        /* Wrapper */
+        .yota-vertical-navigation-wrapper {
+            transition-duration: 400ms;
+            transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition-property: width, max-width, min-width;
+        }
+    }
+
+    /* Over mode */
+    &.yota-vertical-navigation-mode-over {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+    }
+
+    /* Left position */
+    &.yota-vertical-navigation-position-left {
+
+        /* Side mode */
+        &.yota-vertical-navigation-mode-side {
+            margin-left: calc(#{var(--yota-vertical-navigation-width)} * -1);
+
+            &.yota-vertical-navigation-opened {
+                margin-left: 0;
+            }
+        }
+
+        /* Over mode */
+        &.yota-vertical-navigation-mode-over {
+            left: 0;
+            transform: translate3d(-100%, 0, 0);
+
+            &.yota-vertical-navigation-opened {
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Wrapper */
+        .yota-vertical-navigation-wrapper {
+            left: 0;
+        }
+    }
+
+    /* Right position */
+    &.yota-vertical-navigation-position-right {
+
+        /* Side mode */
+        &.yota-vertical-navigation-mode-side {
+            margin-right: calc(var(--yota-vertical-navigation-width) * -1);
+
+            &.yota-vertical-navigation-opened {
+                margin-right: 0;
+            }
+        }
+
+        /* Over mode */
+        &.yota-vertical-navigation-mode-over {
+            right: 0;
+            transform: translate3d(100%, 0, 0);
+
+            &.yota-vertical-navigation-opened {
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Wrapper */
+        .yota-vertical-navigation-wrapper {
+            right: 0;
+        }
+    }
+
+    /* Inner mode */
+    &.yota-vertical-navigation-inner {
+        position: relative;
+        width: auto;
+        min-width: 0;
+        max-width: none;
+        height: auto;
+        min-height: 0;
+        max-height: none;
+        box-shadow: none;
+
+        .yota-vertical-navigation-wrapper {
+            position: relative;
+            overflow: visible;
+            height: auto;
+
+            .yota-vertical-navigation-content {
+                overflow: visible !important;
+            }
+        }
+    }
+
+    /* Wrapper */
+    .yota-vertical-navigation-wrapper {
+        position: absolute;
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 10;
+        background: inherit;
+        box-shadow: inset -1px 0 0 var(--yota-border);
+
+        /* Header */
+        .yota-vertical-navigation-header {
+
+        }
+
+        /* Content */
+        .yota-vertical-navigation-content {
+            flex: 1 1 auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+
+            /* Divider */
+            > yota-vertical-navigation-divider-item {
+                margin: 24px 0;
+            }
+
+            /* Group */
+            > yota-vertical-navigation-group-item {
+                margin-top: 24px;
+            }
+        }
+
+        /* Footer */
+        .yota-vertical-navigation-footer {
+
+        }
+    }
+
+    /* Aside wrapper */
+    .yota-vertical-navigation-aside-wrapper {
+        position: absolute;
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        top: 0;
+        bottom: 0;
+        left: var(--yota-vertical-navigation-width);
+        width: var(--yota-vertical-navigation-width);
+        height: 100%;
+        z-index: 5;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        transition-duration: 400ms;
+        transition-property: left, right;
+        transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+        background: inherit;
+
+        > yota-vertical-navigation-aside-item {
+            padding: 24px 0;
+
+            /* First item of the aside */
+            > .yota-vertical-navigation-item-wrapper {
+                display: none !important;
+            }
+        }
+    }
+
+    &.yota-vertical-navigation-position-right {
+
+        .yota-vertical-navigation-aside-wrapper {
+            left: auto;
+            right: var(--yota-vertical-navigation-width);
+        }
+    }
+
+    /* ----------------------------------------------------------------------------------------------------- */
+    /* @ Navigation Items
+    /* ----------------------------------------------------------------------------------------------------- */
+
+    /* Navigation items common */
+    yota-vertical-navigation-aside-item,
+    yota-vertical-navigation-basic-item,
+    yota-vertical-navigation-collapsable-item,
+    yota-vertical-navigation-divider-item,
+    yota-vertical-navigation-group-item,
+    yota-vertical-navigation-spacer-item {
+        display: flex;
+        flex-direction: column;
+        flex: 1 0 auto;
+        user-select: none;
+
+        .yota-vertical-navigation-item-wrapper {
+
+            .yota-vertical-navigation-item {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 10px 16px;
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 20px;
+                text-decoration: none;
+                border-radius: 6px;
+
+                /* Disabled state */
+                &.yota-vertical-navigation-item-disabled {
+                    cursor: default;
+                    opacity: 0.4;
+                }
+
+                .yota-vertical-navigation-item-icon {
+                    margin-right: 16px;
+                }
+
+                .yota-vertical-navigation-item-title-wrapper {
+
+                    .yota-vertical-navigation-item-subtitle {
+                        font-size: 11px;
+                        line-height: 1.5;
+                    }
+                }
+
+                .yota-vertical-navigation-item-badge {
+                    margin-left: auto;
+
+                    .yota-vertical-navigation-item-badge-content {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 10px;
+                        font-weight: 600;
+                        white-space: nowrap;
+                        height: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+    /* Aside, Basic, Collapsable, Group */
+    yota-vertical-navigation-aside-item,
+    yota-vertical-navigation-basic-item,
+    yota-vertical-navigation-collapsable-item,
+    yota-vertical-navigation-group-item {
+
+        > .yota-vertical-navigation-item-wrapper {
+            margin: 0 12px;
+        }
+    }
+
+    /* Aside, Basic, Collapsable */
+    yota-vertical-navigation-aside-item,
+    yota-vertical-navigation-basic-item,
+    yota-vertical-navigation-collapsable-item {
+        margin-bottom: 4px;
+
+        .yota-vertical-navigation-item {
+            cursor: pointer;
+        }
+    }
+
+    /* Aside */
+    yota-vertical-navigation-aside-item {
+
+    }
+
+    /* Basic */
+    yota-vertical-navigation-basic-item {
+
+    }
+
+    /* Collapsable */
+    yota-vertical-navigation-collapsable-item {
+
+        > .yota-vertical-navigation-item-wrapper {
+
+            .yota-vertical-navigation-item {
+
+                .yota-vertical-navigation-item-badge {
+
+                    + .yota-vertical-navigation-item-arrow {
+                        margin-left: 8px;
+                    }
+                }
+
+                .yota-vertical-navigation-item-arrow {
+                    height: 20px;
+                    line-height: 20px;
+                    margin-left: auto;
+                    transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),
+                    color 375ms cubic-bezier(0.25, 0.8, 0.25, 1);
+                }
+            }
+        }
+
+        &.yota-vertical-navigation-item-expanded {
+
+            > .yota-vertical-navigation-item-wrapper {
+
+                .yota-vertical-navigation-item {
+
+                    .yota-vertical-navigation-item-arrow {
+                        transform: rotate(90deg);
+                    }
+                }
+            }
+        }
+
+        > .yota-vertical-navigation-item-children {
+
+            > *:first-child {
+                margin-top: 6px;
+            }
+
+            > *:last-child {
+                padding-bottom: 6px;
+
+                > .yota-vertical-navigation-item-children {
+
+                    > *:last-child {
+                        padding-bottom: 0;
+                    }
+                }
+            }
+
+            .yota-vertical-navigation-item {
+                padding: 10px 16px;
+            }
+        }
+
+        /* 1st level */
+        .yota-vertical-navigation-item-children {
+            overflow: hidden;
+
+            .yota-vertical-navigation-item {
+                padding-left: 56px;
+            }
+
+            /* 2nd level */
+            .yota-vertical-navigation-item-children {
+
+                .yota-vertical-navigation-item {
+                    padding-left: 72px;
+                }
+
+                /* 3rd level */
+                .yota-vertical-navigation-item-children {
+
+                    .yota-vertical-navigation-item {
+                        padding-left: 88px;
+                    }
+
+                    /* 4th level */
+                    .yota-vertical-navigation-item-children {
+
+                        .yota-vertical-navigation-item {
+                            padding-left: 104px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /* Divider */
+    yota-vertical-navigation-divider-item {
+        margin: 12px 0;
+
+        .yota-vertical-navigation-item-wrapper {
+            height: 1px;
+            box-shadow: 0 1px 0 0;
+        }
+    }
+
+    /* Group */
+    yota-vertical-navigation-group-item {
+
+        > .yota-vertical-navigation-item-wrapper {
+
+            .yota-vertical-navigation-item {
+
+                .yota-vertical-navigation-item-badge,
+                .yota-vertical-navigation-item-icon {
+                    display: none !important;
+                }
+
+                .yota-vertical-navigation-item-title-wrapper {
+
+                    .yota-vertical-navigation-item-title {
+                        font-size: 12px;
+                        font-weight: 600;
+                        letter-spacing: 0.05em;
+                        text-transform: uppercase;
+                    }
+                }
+            }
+        }
+    }
+
+    /* Spacer */
+    yota-vertical-navigation-spacer-item {
+        margin: 6px 0;
+    }
+}
+
+/* ----------------------------------------------------------------------------------------------------- */
+/* @ Overlay
+/* ----------------------------------------------------------------------------------------------------- */
+.yota-vertical-navigation-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 170;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    + .yota-vertical-navigation-aside-overlay {
+        background-color: transparent;
+    }
+}
+
+/* ----------------------------------------------------------------------------------------------------- */
+/* @ Aside overlay
+/* ----------------------------------------------------------------------------------------------------- */
+.yota-vertical-navigation-aside-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 169;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* ----------------------------------------------------------------------------------------------------- */
+/* @ Navigation Items Colors
+/* ----------------------------------------------------------------------------------------------------- */
+
+/* Navigation items common */
+yota-vertical-navigation-aside-item,
+yota-vertical-navigation-basic-item,
+yota-vertical-navigation-collapsable-item,
+yota-vertical-navigation-group-item {
+
+    .yota-vertical-navigation-item-wrapper {
+
+        .yota-vertical-navigation-item {
+            color: currentColor;
+
+            .yota-vertical-navigation-item-icon {
+                @apply text-current opacity-60;
+            }
+
+            .yota-vertical-navigation-item-title-wrapper {
+
+                .yota-vertical-navigation-item-title {
+                    @apply text-current opacity-80;
+                }
+
+                .yota-vertical-navigation-item-subtitle {
+                    @apply text-current opacity-50;
+                }
+            }
+        }
+    }
+}
+
+/* Aside, Basic, Collapsable */
+yota-vertical-navigation-aside-item,
+yota-vertical-navigation-basic-item,
+yota-vertical-navigation-collapsable-item {
+
+    > .yota-vertical-navigation-item-wrapper {
+
+        .yota-vertical-navigation-item {
+
+            /* Active state */
+            &:not(.yota-vertical-navigation-item-disabled) {
+
+                &.yota-vertical-navigation-item-active,
+                &.yota-vertical-navigation-item-active-forced {
+                    @apply bg-gray-800 bg-opacity-5 dark:bg-white dark:bg-opacity-12;
+
+                    .yota-vertical-navigation-item-icon {
+                        @apply opacity-100;
+                    }
+
+                    .yota-vertical-navigation-item-title {
+                        @apply opacity-100;
+                    }
+
+                    .yota-vertical-navigation-item-subtitle {
+                        @apply opacity-100;
+                    }
+                }
+            }
+
+            /* Hover state */
+            &:not(.yota-vertical-navigation-item-active-forced):not(.yota-vertical-navigation-item-active):not(.yota-vertical-navigation-item-disabled) {
+
+                &:hover {
+                    @apply bg-gray-800 bg-opacity-5 dark:bg-white dark:bg-opacity-12;
+
+                    .yota-vertical-navigation-item-icon {
+                        @apply opacity-100;
+                    }
+
+                    .yota-vertical-navigation-item-title,
+                    .yota-vertical-navigation-item-arrow {
+                        @apply opacity-100;
+                    }
+
+                    .yota-vertical-navigation-item-subtitle {
+                        @apply opacity-100;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Collapsable */
+yota-vertical-navigation-collapsable-item {
+
+    /* Expanded state */
+    &.yota-vertical-navigation-item-expanded {
+
+        > .yota-vertical-navigation-item-wrapper {
+
+            .yota-vertical-navigation-item {
+
+                .yota-vertical-navigation-item-icon {
+                    @apply opacity-100;
+                }
+
+                .yota-vertical-navigation-item-title,
+                .yota-vertical-navigation-item-arrow {
+                    @apply opacity-100;
+                }
+
+                .yota-vertical-navigation-item-subtitle {
+                    @apply opacity-100;
+                }
+            }
+        }
+    }
+}
+
+/* Group */
+yota-vertical-navigation-group-item {
+
+    > .yota-vertical-navigation-item-wrapper {
+
+        .yota-vertical-navigation-item {
+
+            .yota-vertical-navigation-item-title-wrapper {
+
+                .yota-vertical-navigation-item-title {
+                    @apply opacity-100 text-primary-600 dark:text-primary-400;
+                }
+            }
+        }
+    }
+}

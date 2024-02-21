@@ -1,0 +1,82 @@
+<div
+    class="yota-alert-container"
+    *ngIf="!dismissible || dismissible && !dismissed"
+    [@fadeIn]="!dismissed"
+    [@fadeOut]="!dismissed">
+
+    <!-- Border -->
+    <div
+        class="yota-alert-border"
+        *ngIf="appearance === 'border'"></div>
+
+    <!-- Icon -->
+    <div
+        class="yota-alert-icon"
+        *ngIf="showIcon">
+
+        <!-- Custom icon -->
+        <div class="yota-alert-custom-icon">
+            <ng-content select="[yotaAlertIcon]"></ng-content>
+        </div>
+
+        <!-- Default icons -->
+        <div class="yota-alert-default-icon">
+
+            <mat-icon
+                *ngIf="type === 'primary'"
+                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+
+            <mat-icon
+                *ngIf="type === 'accent'"
+                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+
+            <mat-icon
+                *ngIf="type === 'warn'"
+                [svgIcon]="'heroicons_solid:x-circle'"></mat-icon>
+
+            <mat-icon
+                *ngIf="type === 'basic'"
+                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+
+            <mat-icon
+                *ngIf="type === 'info'"
+                [svgIcon]="'heroicons_solid:information-circle'"></mat-icon>
+
+            <mat-icon
+                *ngIf="type === 'success'"
+                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+
+            <mat-icon
+                *ngIf="type === 'warning'"
+                [svgIcon]="'heroicons_solid:exclamation-triangle'"></mat-icon>
+
+            <mat-icon
+                *ngIf="type === 'error'"
+                [svgIcon]="'heroicons_solid:x-circle'"></mat-icon>
+
+        </div>
+
+    </div>
+
+    <!-- Content -->
+    <div class="yota-alert-content">
+
+        <div class="yota-alert-title">
+            <ng-content select="[yotaAlertTitle]"></ng-content>
+        </div>
+
+        <div class="yota-alert-message">
+            <ng-content></ng-content>
+        </div>
+
+    </div>
+
+    <!-- Dismiss button -->
+    <button
+        class="yota-alert-dismiss-button"
+        mat-icon-button
+        (click)="dismiss()">
+        <mat-icon [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
+    </button>
+
+</div>
